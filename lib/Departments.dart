@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:js_interop';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -55,7 +54,10 @@ class _DepartmentListState extends State<DepartmentList> {
               color: Colors.red,
             ),
             SizedBox(width: 10),
-            Text('No Internet Connection'),
+            Text(
+              'No Internet!',
+              style: TextStyle(fontSize: 20),
+            ),
           ],
         ),
         content: Text(

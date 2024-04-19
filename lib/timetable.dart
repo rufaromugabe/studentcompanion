@@ -97,7 +97,7 @@ class _timetableState extends State<timetable> {
               ))
           .toList();
     } else {
-      throw Exception('Failed to Load Timetable');
+      throw Exception('Network error occurred!');
     }
   }
 
