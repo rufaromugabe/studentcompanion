@@ -1,10 +1,11 @@
 import 'dart:async';
-
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_elastic_list_view/flutter_elastic_list_view.dart';
+import 'package:student_companion/main.dart';
 import 'package:student_companion/timetable.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
@@ -14,6 +15,7 @@ class DepartmentList extends StatefulWidget {
 }
 
 class _DepartmentListState extends State<DepartmentList> {
+  bool _isDarkTheme = false;
   Future<List<dynamic>> _fetchDepartmentsFromApi() async {
     final _cacheKey = 'departments_cache';
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -55,7 +57,7 @@ class _DepartmentListState extends State<DepartmentList> {
             ),
             SizedBox(width: 10),
             Text(
-              'No Internet!',
+              'No Internet !',
               style: TextStyle(fontSize: 20),
             ),
           ],
@@ -107,6 +109,13 @@ class _DepartmentListState extends State<DepartmentList> {
           title: Text('Departments', style: TextStyle(color: Colors.white)),
           backgroundColor: Color.fromARGB(255, 1, 21, 52),
           actions: <Widget>[
+            Switch(
+              value: Provider.of<ThemeNotifier>(context).darkTheme,
+              onChanged: (value) {
+                Provider.of<ThemeNotifier>(context, listen: false)
+                    .toggleTheme();
+              },
+            ),
             IconButton(
               icon: Icon(
                 Icons.refresh,
@@ -137,7 +146,10 @@ class _DepartmentListState extends State<DepartmentList> {
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: ListTile(
-                      title: Text(department['Dname']),
+                      title: Text(
+                        department['Dname'],
+                        style: TextStyle(color: Colors.black),
+                      ),
                       leading: Icon(Icons.collections_bookmark),
                       onTap: () {
                         Navigator.push(
