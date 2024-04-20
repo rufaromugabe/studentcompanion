@@ -124,15 +124,19 @@ class _DepartmentListState extends State<DepartmentList> {
             ),
           ]),
       drawer: Drawer(
+        backgroundColor: Color.fromARGB(255, 1, 5, 35).withOpacity(0.8),
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
-            DrawerHeader(
-              child: Text('Departments'),
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
+            Container(
+              height: 100,
+              child: DrawerHeader(
+                  child: Text('Menu', style: TextStyle(color: Colors.white)),
+                  decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 1, 21, 52),
+                  )),
             ),
+
             ListTile(
               title: Text('Reload Data'),
               leading: Icon(Icons.refresh),
@@ -143,6 +147,7 @@ class _DepartmentListState extends State<DepartmentList> {
             ),
             ListTile(
               title: Text('Option 2'),
+              leading: Icon(Icons.home),
               onTap: () {
                 // Update the state of the app
                 // Then close the drawer
