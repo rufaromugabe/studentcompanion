@@ -122,7 +122,11 @@ class _timetableState extends State<timetable> {
             } else if (snapshot.hasData) {
               return SfCalendarTheme(
                 data: SfCalendarThemeData(
-                    viewHeaderBackgroundColor: Colors.amber),
+                    todayHighlightColor: Colors.red,
+                    viewHeaderDateTextStyle: TextStyle(color: Colors.white),
+                    viewHeaderDayTextStyle: TextStyle(color: Colors.white),
+                    timeIndicatorTextStyle: TextStyle(color: Colors.red),
+                    viewHeaderBackgroundColor: Colors.deepPurple),
                 child: SfCalendar(
                   view: CalendarView.workWeek,
                   showCurrentTimeIndicator: true,

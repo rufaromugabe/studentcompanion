@@ -9,6 +9,12 @@ ThemeData lightTheme() {
     backgroundColor: Color(0xFFFCFCFC),
     canvasColor: Color(0xFFFFFFFF),
     errorColor: Color(0xFFB00020),
+    listTileTheme: ListTileThemeData(iconColor: Colors.white),
+    iconTheme: IconThemeData(color: Colors.white),
+    iconButtonTheme: IconButtonThemeData(
+        style: ButtonStyle(
+      foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+    )),
     textTheme: TextTheme(
       headline1: TextStyle(color: Color(0xFF212121)),
       headline2: TextStyle(color: Color(0xFF212121)),

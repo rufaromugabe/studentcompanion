@@ -119,11 +119,40 @@ class _DepartmentListState extends State<DepartmentList> {
             IconButton(
               icon: Icon(
                 Icons.refresh,
-                color: Colors.white,
               ),
               onPressed: _refreshAllCache,
             ),
           ]),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              child: Text('Departments'),
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+            ),
+            ListTile(
+              title: Text('Reload Data'),
+              leading: Icon(Icons.refresh),
+              onTap: () async {
+                await _refreshAllCache();
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text('Option 2'),
+              onTap: () {
+                // Update the state of the app
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+            ),
+            // Add more ListTiles for more departments
+          ],
+        ),
+      ),
       body: RefreshIndicator(
         onRefresh: _refreshAllCache,
         child: FutureBuilder<List<dynamic>>(
