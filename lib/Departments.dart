@@ -15,7 +15,6 @@ class DepartmentList extends StatefulWidget {
 }
 
 class _DepartmentListState extends State<DepartmentList> {
-  bool _isDarkTheme = false;
   Future<List<dynamic>> _fetchDepartmentsFromApi() async {
     final _cacheKey = 'departments_cache';
     SharedPreferences prefs = await SharedPreferences.getInstance();
