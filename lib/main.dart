@@ -63,6 +63,13 @@ class ThemeNotifier extends ChangeNotifier {
   }
 
   ThemeMode getThemeMode() {
-    return _darkTheme ? ThemeMode.dark : ThemeMode.light;
+    if (_prefs?.getBool(key) == null) {
+      final brightness =
+          MediaQueryData.fromWindow(WidgetsBinding.instance!.window)
+              .platformBrightness;
+      return brightness == Brightness.dark ? ThemeMode.dark : ThemeMode.light;
+    } else {
+      return _darkTheme ? ThemeMode.dark : ThemeMode.light;
+    }
   }
 }

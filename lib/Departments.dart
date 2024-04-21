@@ -8,6 +8,8 @@ import 'package:flutter_elastic_list_view/flutter_elastic_list_view.dart';
 import 'package:student_companion/Events.dart';
 import 'package:student_companion/main.dart';
 import 'package:student_companion/timetable.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 
 class DepartmentList extends StatefulWidget {
   @override
@@ -98,17 +100,32 @@ class _DepartmentListState extends State<DepartmentList> {
           title: Text('Departments', style: TextStyle(color: Colors.white)),
           backgroundColor: Color.fromARGB(255, 1, 21, 52),
           actions: <Widget>[
-            Switch(
-              value: Provider.of<ThemeNotifier>(context).darkTheme,
-              onChanged: (value) {
-                Provider.of<ThemeNotifier>(context, listen: false)
-                    .toggleTheme();
-              },
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: LiteRollingSwitch(
+                value: Theme.of(context).brightness == Brightness.light,
+                width: 100,
+                textOn: 'Light',
+                textOff: 'Dark',
+                colorOn: Colors.amber,
+                colorOff: Color.fromARGB(255, 31, 28, 28),
+                iconOn: Icons.wb_sunny,
+                iconOff: Icons.nights_stay,
+                onTap: () {},
+                onChanged: (bool isOn) {
+                  Provider.of<ThemeNotifier>(context, listen: false)
+                      .toggleTheme();
+                },
+                onDoubleTap: () {},
+                onSwipe: () {},
+              ),
             ),
             IconButton(
+              iconSize: 40,
               icon: Icon(
                 Icons.refresh,
               ),
+              tooltip: ('Refresh'),
               onPressed: _refreshAllCache,
             ),
           ]),
@@ -128,7 +145,7 @@ class _DepartmentListState extends State<DepartmentList> {
 
             ListTile(
               title: Text('Reload Data'),
-              leading: Icon(Icons.refresh),
+              leading: Icon(Icons.refresh, size: 40),
               onTap: () async {
                 await _refreshAllCache();
                 Navigator.pop(context);
@@ -136,7 +153,7 @@ class _DepartmentListState extends State<DepartmentList> {
             ),
             ListTile(
               title: Text('Events'),
-              leading: Icon(Icons.home),
+              leading: Icon(Icons.home, size: 40),
               onTap: () async {
                 Navigator.pop(context);
                 await Navigator.push(context,
@@ -153,7 +170,20 @@ class _DepartmentListState extends State<DepartmentList> {
           future: _fetchDepartmentsFromApi(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
+              return ListView.builder(
+                  itemCount: 20, // number of shimmer items you want to show
+                  itemBuilder: (_, __) => Shimmer.fromColors(
+                        baseColor: Colors.grey[600]!,
+                        highlightColor: Colors.grey!,
+                        child: Container(
+                          height: 50,
+                          margin: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(16)),
+                          child: ListTile(),
+                        ),
+                      ));
             } else if (snapshot.hasError) {
               return Center(child: Text('Failed to load departments'));
             } else {
