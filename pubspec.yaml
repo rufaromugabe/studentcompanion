@@ -39,8 +39,8 @@ dependencies:
   shared_preferences: ^2.2.3
   syncfusion_flutter_calendar: ^25.1.40
   flutter_elastic_list_view: ^0.0.5+2
-  connectivity_plus: ^6.0.2
   provider: ^6.1.2
+  flip_card: ^0.7.0
 
 dev_dependencies:
   flutter_test:

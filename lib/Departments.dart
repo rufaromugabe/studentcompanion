@@ -5,9 +5,9 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_elastic_list_view/flutter_elastic_list_view.dart';
+import 'package:student_companion/Events.dart';
 import 'package:student_companion/main.dart';
 import 'package:student_companion/timetable.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 
 class DepartmentList extends StatefulWidget {
   @override
@@ -32,16 +32,6 @@ class _DepartmentListState extends State<DepartmentList> {
       } else {
         throw Exception('Failed to load departments');
       }
-    }
-  }
-
-  Future<bool> isConnectedToInternet() async {
-    var connectivityResult = await (Connectivity().checkConnectivity());
-    if (connectivityResult == ConnectivityResult.mobile ||
-        connectivityResult == ConnectivityResult.wifi) {
-      return true;
-    } else {
-      return false;
     }
   }
 
@@ -146,12 +136,12 @@ class _DepartmentListState extends State<DepartmentList> {
               },
             ),
             ListTile(
-              title: Text('Option 2'),
+              title: Text('Events'),
               leading: Icon(Icons.home),
-              onTap: () {
-                // Update the state of the app
-                // Then close the drawer
+              onTap: () async {
                 Navigator.pop(context);
+                await Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => EventsPage()));
               },
             ),
             // Add more ListTiles for more departments
