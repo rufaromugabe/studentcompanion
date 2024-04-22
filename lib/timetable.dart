@@ -116,7 +116,11 @@ class _timetableState extends State<timetable> {
           future: _appointmentsFuture,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator();
+              return Center(
+                child: Image.asset(
+                  'assets/loading.gif',
+                ),
+              );
             } else if (snapshot.hasError) {
               return Text('Failed to Load Timetable');
             } else if (snapshot.hasData) {

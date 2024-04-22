@@ -43,6 +43,7 @@ dependencies:
   flip_card: ^0.7.0
   shimmer: ^3.0.0
   lite_rolling_switch: ^1.0.1
+  slider_button: ^2.1.0
 
 dev_dependencies:
   flutter_test:

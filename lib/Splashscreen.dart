@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:student_companion/Departments.dart';
+import 'package:slider_button/slider_button.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -14,7 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-                'assets/splash.jpg'), // Replace this URL with your image URL
+                'assets/time.jpg'), // Replace this URL with your image URL
             fit: BoxFit.cover,
           ),
         ),
@@ -26,37 +28,40 @@ class _SplashScreenState extends State<SplashScreen> {
                 height: 150,
               ),
               Text(
-                'NB This App Current is Still unfinished',
-                style: TextStyle(color: Colors.white, fontSize: 15),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => DepartmentList()),
-                  );
-                },
-                child: Text(
-                  'Continue',
-                  style: TextStyle(
+                'NB. This App is Still in Demo !\n   Timetable App By Spyware',
+                style: TextStyle(
                     color: Colors.white,
                     fontSize: 20,
-                  ),
+                    fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 70,
+              ),
+              SliderButton(
+                action: () async {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => DepartmentList()),
+                  );
+                  return false;
+                },
+                label: Text(
+                  "Slide to Proceed",
+                  style: TextStyle(
+                      color: Color(0xff4a4a4a),
+                      fontWeight: FontWeight.w500,
+                      fontSize: 17),
                 ),
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.amber),
-                  padding: MaterialStateProperty.all<EdgeInsets>(
-                    EdgeInsets.symmetric(horizontal: 60, vertical: 12),
-                  ),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                  ),
-                  elevation: MaterialStateProperty.all<double>(5),
+                icon: Center(
+                    child: Icon(
+                  CupertinoIcons.time,
+                  color: Colors.deepPurpleAccent,
+                  size: 30.0,
+                  semanticLabel: 'Text to announce in accessibility modes',
+                )),
+                boxShadow: BoxShadow(
+                  color: Colors.black.withOpacity(0.3),
+                  blurRadius: 4,
                 ),
               ),
             ],
