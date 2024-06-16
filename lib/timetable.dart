@@ -1,17 +1,17 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
-import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class timetable extends StatefulWidget {
   final String? departmentCode;
   final String? departmentName;
-  timetable({Key? key, this.departmentCode, this.departmentName})
-      : super(key: key);
+  const timetable({super.key, this.departmentCode, this.departmentName});
 
   @override
   _timetableState createState() => _timetableState();
@@ -24,7 +24,7 @@ class _timetableState extends State<timetable> {
   @override
   void initState() {
     super.initState();
-    _cacheKey = 'timetable_cache_' + widget.departmentCode!;
+    _cacheKey = 'timetable_cache_${widget.departmentCode!}';
     _appointmentsFuture = _fetchAppointmentsOfflineOrOnline();
   }
 
@@ -58,7 +58,7 @@ class _timetableState extends State<timetable> {
         text: ".",
         color: Colors.blue.withOpacity(0.5),
         enablePointerInteraction: true,
-        textStyle: TextStyle(
+        textStyle: const TextStyle(
           color: Colors.black,
         )));
     regions.add(TimeRegion(
@@ -68,7 +68,7 @@ class _timetableState extends State<timetable> {
         text: "Lunch",
         color: Colors.blue.withOpacity(0.5),
         enablePointerInteraction: true,
-        textStyle: TextStyle(
+        textStyle: const TextStyle(
           color: Colors.black,
         )));
 
@@ -76,15 +76,13 @@ class _timetableState extends State<timetable> {
   }
 
   Future<List<Appointment>> _fetchAppointmentsFromApi() async {
-    final _cacheKey = 'timetable_cache_' + widget.departmentCode!;
+    final cacheKey = 'timetable_cache_${widget.departmentCode!}';
 
-    final response = await http.get(Uri.parse(
-        'https://x8ki-letl-twmt.n7.xano.io/api:XOmrzuME/' +
-            widget.departmentCode!));
+    final response = await http.get(Uri.parse(widget.departmentCode!));
     if (response.statusCode == 200) {
       final List<dynamic> responseData = json.decode(response.body);
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString(_cacheKey, response.body);
+      await prefs.setString(cacheKey, response.body);
       return responseData
           .map((data) => Appointment(
                 startTime:
@@ -105,11 +103,11 @@ class _timetableState extends State<timetable> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Color.fromARGB(255, 1, 21, 52),
-          iconTheme: IconThemeData(color: Colors.white),
+          backgroundColor: const Color.fromARGB(255, 1, 21, 52),
+          iconTheme: const IconThemeData(color: Colors.white),
           title: Text(
             widget.departmentName!,
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
           )),
       body: Center(
         child: FutureBuilder<List<Appointment>>(
@@ -122,10 +120,10 @@ class _timetableState extends State<timetable> {
                 ),
               );
             } else if (snapshot.hasError) {
-              return Text('Failed to Load Timetable');
+              return const Text('Failed to Load Timetable');
             } else if (snapshot.hasData) {
               return SfCalendarTheme(
-                data: SfCalendarThemeData(
+                data: const SfCalendarThemeData(
                     todayHighlightColor: Colors.red,
                     viewHeaderDateTextStyle: TextStyle(color: Colors.white),
                     viewHeaderDayTextStyle: TextStyle(color: Colors.white),
@@ -134,13 +132,13 @@ class _timetableState extends State<timetable> {
                 child: SfCalendar(
                   view: CalendarView.workWeek,
                   showCurrentTimeIndicator: true,
-                  allowedViews: [
+                  allowedViews: const [
                     CalendarView.day,
                     CalendarView.workWeek,
                     CalendarView.timelineDay,
                     CalendarView.timelineWeek,
                   ],
-                  timeSlotViewSettings: TimeSlotViewSettings(
+                  timeSlotViewSettings: const TimeSlotViewSettings(
                       timeIntervalHeight: 60,
                       timeIntervalWidth: 50,
                       startHour: 8,
@@ -155,7 +153,7 @@ class _timetableState extends State<timetable> {
                 ),
               );
             }
-            return CircularProgressIndicator();
+            return const CircularProgressIndicator();
           },
         ),
       ),

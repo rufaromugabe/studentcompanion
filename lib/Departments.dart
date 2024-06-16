@@ -1,37 +1,41 @@
 import 'dart:async';
-import 'package:provider/provider.dart';
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:flutter/material.dart';
 import 'package:flutter_elastic_list_view/flutter_elastic_list_view.dart';
+import 'package:http/http.dart' as http;
+import 'package:lite_rolling_switch/lite_rolling_switch.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:student_companion/Events.dart';
 import 'package:student_companion/main.dart';
 import 'package:student_companion/timetable.dart';
-import 'package:shimmer/shimmer.dart';
-import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 
 class DepartmentList extends StatefulWidget {
+  const DepartmentList({super.key});
+
   @override
   _DepartmentListState createState() => _DepartmentListState();
 }
 
 class _DepartmentListState extends State<DepartmentList> {
   Future<List<dynamic>> _fetchDepartmentsFromApi() async {
-    final _cacheKey = 'departments_cache';
+    const cacheKey = 'departments_cache';
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.getString(_cacheKey) != null) {
-      return json.decode(prefs.getString(_cacheKey)!);
+    if (prefs.getString(cacheKey) != null) {
+      return json.decode(prefs.getString(cacheKey)!);
     } else {
-      final response = await http.get(
-          Uri.parse('https://x8ki-letl-twmt.n7.xano.io/api:XOmrzuME/ict_dep'));
+      final response = await http.get(Uri.parse(
+          'https://script.googleusercontent.com/macros/echo?user_content_key=2y_4S9PzfXC6MyRRZFtRJr8QOlkWLCL5RZ_RYQGEhVPqUh1W-nsNF15gfC_WB80Ashe545s2yk0EGFuFvjb5cs_45q4Qugc4m5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnMwsCG3c3bDiFCkSmwiX76Qh40QndxLXRyGMlJWbMHwdWPLwC7ch20rrR9UJYVyx7oBX4sJHdEJ_zSgxZLd3nxkZYVCAAs03Ktz9Jw9Md8uu&lib=M6NEMZODtH7M_wApyPI_9z0WkH33IFIqp'));
       if (response.statusCode == 200) {
         final List<dynamic> responseData = json.decode(response.body);
-        await prefs.setString(_cacheKey, json.encode(responseData));
+        await prefs.setString(cacheKey, json.encode(responseData));
 
         return responseData;
       } else {
-        throw Exception('Failed to load departments');
+        throw Exception(
+            'Failed to load departments. Status Code: ${response.statusCode}, Details: ${response.body}');
       }
     }
   }
@@ -40,7 +44,7 @@ class _DepartmentListState extends State<DepartmentList> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Row(
+        title: const Row(
           children: [
             Icon(
               Icons.error,
@@ -53,14 +57,14 @@ class _DepartmentListState extends State<DepartmentList> {
             ),
           ],
         ),
-        content: Text(
+        content: const Text(
           'You are currently offline. This feature requires an internet connection to function properly.',
           style: TextStyle(fontSize: 16),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('OK'),
+            child: const Text('OK'),
           ),
         ],
       ),
@@ -71,8 +75,8 @@ class _DepartmentListState extends State<DepartmentList> {
     try {
       final response = await http
           .get(Uri.parse(
-              'https://x8ki-letl-twmt.n7.xano.io/api:XOmrzuME/ict_dep'))
-          .timeout(Duration(seconds: 10));
+              'https://script.googleusercontent.com/macros/echo?user_content_key=2y_4S9PzfXC6MyRRZFtRJr8QOlkWLCL5RZ_RYQGEhVPqUh1W-nsNF15gfC_WB80Ashe545s2yk0EGFuFvjb5cs_45q4Qugc4m5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnMwsCG3c3bDiFCkSmwiX76Qh40QndxLXRyGMlJWbMHwdWPLwC7ch20rrR9UJYVyx7oBX4sJHdEJ_zSgxZLd3nxkZYVCAAs03Ktz9Jw9Md8uu&lib=M6NEMZODtH7M_wApyPI_9z0WkH33IFIqp'))
+          .timeout(const Duration(seconds: 20));
 
       if (response.statusCode == 200) {
         SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -97,8 +101,9 @@ class _DepartmentListState extends State<DepartmentList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text('Departments', style: TextStyle(color: Colors.white)),
-          backgroundColor: Color.fromARGB(255, 1, 21, 52),
+          title:
+              const Text('Departments', style: TextStyle(color: Colors.white)),
+          backgroundColor: const Color.fromARGB(255, 1, 21, 52),
           actions: <Widget>[
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -108,7 +113,7 @@ class _DepartmentListState extends State<DepartmentList> {
                 textOn: 'Light',
                 textOff: 'Dark',
                 colorOn: Colors.amber,
-                colorOff: Color.fromARGB(255, 31, 28, 28),
+                colorOff: const Color.fromARGB(255, 31, 28, 28),
                 iconOn: Icons.wb_sunny,
                 iconOff: Icons.nights_stay,
                 onTap: () {},
@@ -122,7 +127,7 @@ class _DepartmentListState extends State<DepartmentList> {
             ),
             IconButton(
               iconSize: 40,
-              icon: Icon(
+              icon: const Icon(
                 Icons.refresh,
               ),
               tooltip: ('Refresh'),
@@ -130,30 +135,30 @@ class _DepartmentListState extends State<DepartmentList> {
             ),
           ]),
       drawer: Drawer(
-        backgroundColor: Color.fromARGB(255, 1, 5, 35).withOpacity(0.8),
+        backgroundColor: const Color.fromARGB(255, 1, 5, 35).withOpacity(0.8),
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
-            Container(
+            const SizedBox(
               height: 100,
               child: DrawerHeader(
-                  child: Text('Menu', style: TextStyle(color: Colors.white)),
                   decoration: BoxDecoration(
                     color: Color.fromARGB(255, 1, 21, 52),
-                  )),
+                  ),
+                  child: Text('Menu', style: TextStyle(color: Colors.white))),
             ),
 
             ListTile(
-              title: Text('Reload Data'),
-              leading: Icon(Icons.refresh, size: 40),
+              title: const Text('Reload Data'),
+              leading: const Icon(Icons.refresh, size: 40),
               onTap: () async {
-                await _refreshAllCache();
                 Navigator.pop(context);
+                await _refreshAllCache();
               },
             ),
             ListTile(
-              title: Text('Events'),
-              leading: Icon(Icons.home, size: 40),
+              title: const Text('Events'),
+              leading: const Icon(Icons.home, size: 40),
               onTap: () async {
                 Navigator.pop(context);
                 await Navigator.push(context,
@@ -174,18 +179,19 @@ class _DepartmentListState extends State<DepartmentList> {
                   itemCount: 20, // number of shimmer items you want to show
                   itemBuilder: (_, __) => Shimmer.fromColors(
                         baseColor: Colors.grey[600]!,
-                        highlightColor: Colors.grey!,
+                        highlightColor: Colors.grey,
                         child: Container(
                           height: 50,
                           margin: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(16)),
-                          child: ListTile(),
+                          child: const ListTile(),
                         ),
                       ));
             } else if (snapshot.hasError) {
-              return Center(child: Text('Failed to load departments'));
+              return Center(
+                  child: Text('Failed to load departments${snapshot.error}'));
             } else {
               return ElasticListView.builder(
                 itemCount: snapshot.data!.length,
@@ -201,15 +207,15 @@ class _DepartmentListState extends State<DepartmentList> {
                     child: ListTile(
                       title: Text(
                         department['Dname'],
-                        style: TextStyle(color: Colors.black),
+                        style: const TextStyle(color: Colors.black),
                       ),
-                      leading: Icon(Icons.collections_bookmark),
+                      leading: const Icon(Icons.collections_bookmark),
                       onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => timetable(
-                              departmentCode: department['Code'],
+                              departmentCode: department['code'],
                               departmentName: department['Dname'],
                             ),
                           ),
