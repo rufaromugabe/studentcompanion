@@ -78,7 +78,8 @@ class _timetableState extends State<timetable> {
   Future<List<Appointment>> _fetchAppointmentsFromApi() async {
     final cacheKey = 'timetable_cache_${widget.departmentCode!}';
 
-    final response = await http.get(Uri.parse(widget.departmentCode!));
+    final response = await http.get(Uri.parse(
+        'https://script.google.com/macros/s/${widget.departmentCode!}'));
     if (response.statusCode == 200) {
       final List<dynamic> responseData = json.decode(response.body);
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -137,6 +138,7 @@ class _timetableState extends State<timetable> {
                     CalendarView.workWeek,
                     CalendarView.timelineDay,
                     CalendarView.timelineWeek,
+                    CalendarView.schedule,
                   ],
                   timeSlotViewSettings: const TimeSlotViewSettings(
                       timeIntervalHeight: 60,

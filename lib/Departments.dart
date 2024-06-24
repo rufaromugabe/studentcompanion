@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:student_companion/Events.dart';
 import 'package:student_companion/main.dart';
+import 'package:student_companion/screens/schedule_screen.dart';
 import 'package:student_companion/timetable.dart';
 
 class DepartmentList extends StatefulWidget {
@@ -154,6 +155,17 @@ class _DepartmentListState extends State<DepartmentList> {
               onTap: () async {
                 Navigator.pop(context);
                 await _refreshAllCache();
+              },
+            ),
+            ListTile(
+              title: const Text('University Schedule'),
+              leading: const Icon(Icons.home, size: 40),
+              onTap: () async {
+                Navigator.pop(context);
+                await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ScheduleScreen()));
               },
             ),
             ListTile(

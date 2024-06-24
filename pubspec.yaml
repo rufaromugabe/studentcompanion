@@ -44,6 +44,8 @@ dependencies:
   shimmer: ^3.0.0
   lite_rolling_switch: ^1.0.1
   slider_button: ^2.1.0
+  intl: ^0.18.1
+  syncfusion_flutter_core: ^25.2.7
 
 dev_dependencies:
   flutter_test:

@@ -1,9 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:student_companion/Departments.dart';
+import 'package:flutter/material.dart';
 import 'package:slider_button/slider_button.dart';
+import 'package:student_companion/Departments.dart';
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -13,10 +15,9 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage(
-                'assets/time.jpg'), // Replace this URL with your image URL
+            image: AssetImage('assets/time.jpg'),
             fit: BoxFit.cover,
           ),
         ),
@@ -24,35 +25,36 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 150,
               ),
-              Text(
+              const Text(
                 'NB. This App is Still in Demo !\n   Timetable App By Spyware',
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 20,
                     fontWeight: FontWeight.bold),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 70,
               ),
               SliderButton(
                 action: () async {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => DepartmentList()),
+                    MaterialPageRoute(
+                        builder: (context) => const DepartmentList()),
                   );
                   return false;
                 },
-                label: Text(
+                label: const Text(
                   "Slide to Proceed",
                   style: TextStyle(
                       color: Color(0xff4a4a4a),
                       fontWeight: FontWeight.w500,
                       fontSize: 17),
                 ),
-                icon: Center(
+                icon: const Center(
                     child: Icon(
                   CupertinoIcons.time,
                   color: Colors.deepPurpleAccent,
