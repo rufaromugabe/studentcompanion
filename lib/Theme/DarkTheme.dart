@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 ThemeData darkTheme() {
   return ThemeData(
+    secondaryHeaderColor: Colors.amber,
     brightness: Brightness.dark,
     primaryColor: const Color(0xFF2F3C7E),
     primaryColorDark: const Color(0xFF1A1D23),

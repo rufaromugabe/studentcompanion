@@ -46,6 +46,7 @@ dependencies:
   slider_button: ^2.1.0
   intl: ^0.18.1
   syncfusion_flutter_core: ^25.2.7
+  carousel_slider: ^4.2.1
 
 dev_dependencies:
   flutter_test:

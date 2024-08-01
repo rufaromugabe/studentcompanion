@@ -4,13 +4,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_elastic_list_view/flutter_elastic_list_view.dart';
 import 'package:http/http.dart' as http;
-import 'package:lite_rolling_switch/lite_rolling_switch.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:student_companion/Events.dart';
-import 'package:student_companion/main.dart';
-import 'package:student_companion/screens/schedule_screen.dart';
 import 'package:student_companion/timetable.dart';
 
 class DepartmentList extends StatefulWidget {
@@ -102,84 +97,8 @@ class _DepartmentListState extends State<DepartmentList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title:
-              const Text('Departments', style: TextStyle(color: Colors.white)),
-          backgroundColor: const Color.fromARGB(255, 1, 21, 52),
-          actions: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: LiteRollingSwitch(
-                value: Theme.of(context).brightness == Brightness.light,
-                width: 100,
-                textOn: 'Light',
-                textOff: 'Dark',
-                colorOn: Colors.amber,
-                colorOff: const Color.fromARGB(255, 31, 28, 28),
-                iconOn: Icons.wb_sunny,
-                iconOff: Icons.nights_stay,
-                onTap: () {},
-                onChanged: (bool isOn) {
-                  Provider.of<ThemeNotifier>(context, listen: false)
-                      .toggleTheme();
-                },
-                onDoubleTap: () {},
-                onSwipe: () {},
-              ),
-            ),
-            IconButton(
-              iconSize: 40,
-              icon: const Icon(
-                Icons.refresh,
-              ),
-              tooltip: ('Refresh'),
-              onPressed: _refreshAllCache,
-            ),
-          ]),
-      drawer: Drawer(
-        backgroundColor: const Color.fromARGB(255, 1, 5, 35).withOpacity(0.8),
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            const SizedBox(
-              height: 100,
-              child: DrawerHeader(
-                  decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 1, 21, 52),
-                  ),
-                  child: Text('Menu', style: TextStyle(color: Colors.white))),
-            ),
-
-            ListTile(
-              title: const Text('Reload Data'),
-              leading: const Icon(Icons.refresh, size: 40),
-              onTap: () async {
-                Navigator.pop(context);
-                await _refreshAllCache();
-              },
-            ),
-            ListTile(
-              title: const Text('University Schedule'),
-              leading: const Icon(Icons.home, size: 40),
-              onTap: () async {
-                Navigator.pop(context);
-                await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const ScheduleScreen()));
-              },
-            ),
-            ListTile(
-              title: const Text('Events'),
-              leading: const Icon(Icons.home, size: 40),
-              onTap: () async {
-                Navigator.pop(context);
-                await Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => EventsPage()));
-              },
-            ),
-            // Add more ListTiles for more departments
-          ],
-        ),
+        title: const Text('Departments', style: TextStyle(color: Colors.white)),
+        backgroundColor: const Color.fromARGB(255, 1, 21, 52),
       ),
       body: RefreshIndicator(
         onRefresh: _refreshAllCache,

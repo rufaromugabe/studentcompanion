@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:slider_button/slider_button.dart';
-import 'package:student_companion/Departments.dart';
+import 'package:student_companion/homescreen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -42,8 +42,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 action: () async {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => const DepartmentList()),
+                    MaterialPageRoute(builder: (context) => HomeScreen()),
                   );
                   return false;
                 },
