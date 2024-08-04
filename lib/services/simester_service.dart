@@ -32,7 +32,7 @@ class AppointmentService {
 
   static Future<List<Appointment>> fetchAppointmentsFromApi() async {
     final response = await http.get(Uri.parse(
-        'https://script.google.com/macros/s/AKfycbxJ15Jw0E0BRsQNuybvMf2vL24CqrYTt8ScxOKrpsacumyqViPlMV3F4XgTrZGh_Zd6wQ/exec'));
+        'https://script.google.cmom/macros/s/AKfycbxJ15Jw0E0BRsQNuybvMf2vL24CqrYTt8ScxOKrpsacumyqViPlMV3F4XgTrZGh_Zd6wQ/exec'));
     if (response.statusCode == 200) {
       final List<dynamic> responseData = json.decode(response.body);
       SharedPreferences prefs = await SharedPreferences.getInstance();

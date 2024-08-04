@@ -6,9 +6,9 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_companion/Departments.dart';
 import 'package:student_companion/Events.dart';
+import 'package:student_companion/about.dart';
 import 'package:student_companion/main.dart';
 import 'package:student_companion/screens/schedule_screen.dart';
-import 'package:student_companion/simester.dart';
 
 class Feature {
   final String name;
@@ -27,10 +27,7 @@ final List<Feature> features = [
       name: 'Noticeboard',
       icon: Icons.notification_important,
       screen: EventsPage()),
-  Feature(
-      name: 'Sim Schedule',
-      icon: Icons.timeline,
-      screen: const SimesterScreen()),
+  Feature(name: 'About Us', icon: Icons.info, screen: const AboutPage()),
 ];
 
 class HomeScreen extends StatefulWidget {
@@ -67,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         content: const Text(
-          'You are currently offline. This feature requires an internet connection to function properly.',
+          'You are currently offline. Get connected to the internet to refresh the app data.',
           style: TextStyle(fontSize: 16),
         ),
         actions: [
@@ -131,20 +128,6 @@ class _HomeScreenState extends State<HomeScreen> {
               onSwipe: () {},
             ),
           ),
-          IconButton(
-            icon: loading
-                ? const CircularProgressIndicator()
-                : const Icon(
-                    Icons.refresh,
-                    size: 45,
-                  ),
-            onPressed: () {
-              _refreshAllCache();
-              setState(() {
-                loading = true;
-              });
-            },
-          ),
         ],
       ),
       body: Column(
@@ -171,7 +154,30 @@ class _HomeScreenState extends State<HomeScreen> {
                     ))
                 .toList(),
           ),
-          const SizedBox(height: 40.0),
+          const SizedBox(height: 10.0),
+          Center(
+              child: SizedBox(
+            height: 50.0,
+            width: 200.0,
+            child: ElevatedButton(
+              onPressed: () {
+                _refreshAllCache();
+                setState(() {
+                  loading = true;
+                });
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: ThemeData().splashColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ),
+              child: loading
+                  ? const CircularProgressIndicator()
+                  : const Text('Refresh App Data'),
+            ),
+          )),
+          const SizedBox(height: 10.0),
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.5,
             child: Padding(

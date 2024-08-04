@@ -29,9 +29,16 @@ class _SplashScreenState extends State<SplashScreen> {
                 height: 150,
               ),
               const Text(
-                'NB. This App is Still in Demo !\n   Timetable App By Spyware',
+                'Confirm to Proceed to the App',
                 style: TextStyle(
                     color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold),
+              ),
+              const Text(
+                'Made with ❤️ by Spyware',
+                style: TextStyle(
+                    color: Color.fromARGB(255, 199, 235, 158),
                     fontSize: 20,
                     fontWeight: FontWeight.bold),
               ),
@@ -42,7 +49,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 action: () async {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => HomeScreen()),
+                    MaterialPageRoute(builder: (context) => const HomeScreen()),
                   );
                   return false;
                 },
